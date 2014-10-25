@@ -1,0 +1,14 @@
+{
+  "name": "chatRoom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "socket.io":  "1.0.x",
+    "mime": "~1.2.7",
+    "node-static": "^0.7.4"
+  },
+  "scripts": {},
+  "author": "",
+  "license": "ISC"
+}
