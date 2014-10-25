@@ -8,12 +8,14 @@ var getInput = function () {
 var submitMessage = function (chat) {
   var msg = getInput()
   chat.sendMessage(msg);
-  $('.display').append("<p>" + msg + '</p>');
 }
 
 $(document).ready(function() {
   var socket = io(); 
   var chat = chat || new window.Chat(socket);
+  chat.socket.on('msgSent',function(data){
+    $('.display').append("<p>" + data.text + '</p>');   
+  })
   $('form').on('submit', function(event) {
     event.preventDefault();
     submitMessage(chat);
