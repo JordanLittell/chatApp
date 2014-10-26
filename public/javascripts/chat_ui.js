@@ -22,8 +22,12 @@ $(document).ready(function() {
   var socket = io(); 
   var chat = chat || new window.Chat(socket);
   
+  var logRoom = function(data) {
+    $('.display').append("<p>You have joined room: " + data.room + "</p>");
+  }
+
   chat.socket.on('nameChangeResponse', function (data) {
-    $('.name').append(data.name);   
+    $('.name').text(data.name);   
   });
   
   chat.socket.on('msgSent',function(data){
@@ -31,13 +35,15 @@ $(document).ready(function() {
   });
 
   chat.socket.on('roomChangeRes', function(data){
-    $('.display').append("<p>You have joined room: " + data.room + "</p>");
-    $('#chat-rooms').append('<p class="room">' + data.room.toUpperCase() + "</p>");
+    $('#chat-rooms').append('<li data-room =' + data.room + ">" + data.room.toUpperCase() + '</li>');  
+    $('li').click(function(event){
+      var room = $(event.currentTarget).text();
+      chat.socket.emit("switchRoom", { name: room.toLowerCase() });  
+    })
   });
 
-  $('.room').click(function(event){
-    var room = $(event.currentTarget).text();
-    chat.socket.emit("roomChange", {name: room.toLowerCase()});
+  chat.socket.on('roomSwitchRes', function(data) {
+    logRoom(data);
   })
 
   $('form').on('submit', function(event) {
