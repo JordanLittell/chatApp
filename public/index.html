@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href='stylesheet.css'>
     <script type="text/javascript" src="javascripts/jquery.min.js"></script>
     
   </head>
   <body>
-    <h1>Hello World</h1>
-    <section class="display"></section>
-    <form>
-      <input type="text" placeholder="write your message" class="message">
-      <input type="submit" value="Send Message">
-    </form>
+    <div class="clearfix">
+      <h1 class="text-center">Chat Application</h1>
+      <aside>
+        <h1>Chat Rooms</h1>
+        <hr>
+        <div id="chat-rooms"></div>
+      </aside>
+      <section>
+        <h1>User: <span class="name"></span></h1>
+        <hr>
+        <div class="display"></div>
+        <form>
+          <input type="text" placeholder="write your message" class="message">
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+    </div>
+
+    
 
     <script src="/socket.io/socket.io.js">
       var socket = io('http://localhost');
