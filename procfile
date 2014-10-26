@@ -1,2 +1,2 @@
-web npm start
-web node lib/chat_app.js
+web: npm start
+web: node lib/chat_app.js
