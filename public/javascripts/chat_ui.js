@@ -57,7 +57,6 @@ $(document).ready(function() {
   chat.socket.on('roomSwitchRes', function(data) {
     logRoom(data);
   })
-
   $('form').on('submit', function(event) {
     event.preventDefault();
     submitMessage(chat);
