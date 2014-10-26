@@ -52,9 +52,10 @@ button:hover {
 
 ul {
   list-style: none;
+  padding: 0;
 }
 
- li:hover {
+li:hover {
   color: blue;
   cursor: pointer;
 }

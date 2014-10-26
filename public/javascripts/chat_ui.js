@@ -24,6 +24,7 @@ $(document).ready(function() {
   
   var logRoom = function(data) {
     $('.display').append("<p>You have joined room: " + data.room + "</p>");
+    $('.room').html(data.room);  
   }
 
   chat.socket.on('nameChangeResponse', function (data) {
@@ -35,11 +36,14 @@ $(document).ready(function() {
   });
 
   chat.socket.on('roomChangeRes', function(data){
+    logRoom(data);
     $('#chat-rooms').append('<li data-room =' + data.room + ">" + data.room.toUpperCase() + '</li>');  
+    
     $('li').click(function(event){
       var room = $(event.currentTarget).text();
       chat.socket.emit("switchRoom", { name: room.toLowerCase() });  
     })
+
   });
 
   chat.socket.on('roomSwitchRes', function(data) {
