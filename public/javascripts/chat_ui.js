@@ -23,7 +23,7 @@ $(document).ready(function() {
   var chat = chat || new window.Chat(socket);
   
   var logRoom = function(data) {
-    $('.display').append("<p>You have joined room: " + data.room + "</p>");
+    $('.display').append("<div class='message-box'>A user joined room: " + data.room + "</div>");
     $('.room').html(data.room);  
   }
 
@@ -32,18 +32,26 @@ $(document).ready(function() {
   });
   
   chat.socket.on('msgSent',function(data){
-    $('.display').append( "<p>" + data.name + ": " + data.text + '</p>');   
+    $('.display').append( "<div class='message-box'>" + '<span class="username">'+data.name + "</span>: " + data.text + '</div>');   
   });
 
   chat.socket.on('roomChangeRes', function(data){
+    var roomIncluded = false;
     logRoom(data);
-    $('#chat-rooms').append('<li data-room =' + data.room + ">" + data.room.toUpperCase() + '</li>');  
-    
-    $('li').click(function(event){
-      var room = $(event.currentTarget).text();
-      chat.socket.emit("switchRoom", { name: room.toLowerCase() });  
+    chat.chatRooms.forEach(function(room){
+      if(room === data.room) {
+        roomIncluded = true;
+      }
     })
 
+    if(!roomIncluded) {
+      chat.chatRooms.push(data.room);
+      $('#chat-rooms').append('<li data-room =' + data.room + ">" + data.room.toUpperCase() + '</li>');  
+      $('li').click(function(event){
+        var room = $(event.currentTarget).text();
+        chat.socket.emit("switchRoom", { name: room.toLowerCase() });  
+      })
+    }
   });
 
   chat.socket.on('roomSwitchRes', function(data) {

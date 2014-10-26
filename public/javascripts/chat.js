@@ -4,5 +4,6 @@ if (typeof window.Chat === 'undefined') {
     this.sendMessage = function (message) {
       this.socket.emit('message',{text: message});
     }
+    this.chatRooms = [];
   }  
 }
